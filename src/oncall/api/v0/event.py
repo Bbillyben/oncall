@@ -2,7 +2,6 @@
 # See LICENSE in the project root for license information.
 
 import time
-from ...constants import AUTH_USER_CAL_MOD
 from ujson import dumps as json_dumps
 from falcon import HTTPNotFound, HTTPBadRequest, HTTPUnauthorized
 
@@ -11,7 +10,7 @@ from ... import db, constants
 from ...utils import (
     load_json_body, user_in_team_by_name, create_notification, create_audit
 )
-from ...constants import EVENT_DELETED, EVENT_EDITED
+from ...constants import EVENT_DELETED, EVENT_EDITED, AUTH_USER_CAL_MOD
 
 from .events import columns, all_columns
 

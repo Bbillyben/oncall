@@ -2,7 +2,6 @@
 # See LICENSE in the project root for license information.
 
 import time
-from ...constants import AUTH_USER_CAL_MOD
 from falcon import HTTP_201, HTTPError, HTTPBadRequest
 from ujson import dumps as json_dumps
 from ...auth import login_required, check_calendar_auth, check_team_auth
@@ -10,7 +9,7 @@ from ... import db, constants
 from ...utils import (
     load_json_body, user_in_team_by_name, create_notification, create_audit
 )
-from ...constants import EVENT_CREATED
+from ...constants import EVENT_CREATED, AUTH_USER_CAL_MOD
 
 columns = {
     'id': '`event`.`id` as `id`',

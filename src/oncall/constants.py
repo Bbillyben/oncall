@@ -54,4 +54,3 @@ def init(config):
     SUPPORTED_TIMEZONES = config['supported_timezones']
     GRACE_PERIOD = config.get('grace_period', 86400)
     AUTH_USER_CAL_MOD = config.get('auth_user_cal_mod')
-    print('**************************  constant auth user cal mod: ', AUTH_USER_CAL_MOD)
