@@ -16,6 +16,10 @@ def on_get(req, resp, key):
     information.  Key can be requested at /api/v0/ical_key.
 
     """
+    print ('Ecal ask req : ', req)
+    print ('ecal req resp : ', resp)
+    print ('ecal req key : ', key)
+
     roles = req.get_param_as_list('roles')
 
     name_and_type = get_name_and_type_from_key(key)

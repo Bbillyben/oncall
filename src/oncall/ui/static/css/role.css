@@ -1,0 +1,387 @@
+/* pour les personnalisation ---------------------------- */
+.calendar-types .color-swatch[data-type="Resp. Isolement"] {
+  background: #339966;
+}
+.module-schedule[data-role="Resp. Isolement"][data-highlighted="true"] .schedule-actions {
+  border-color: #006600;
+}
+.module-schedule[data-role="Resp. Isolement"] .schedule-actions {
+  border-color: #339966;
+}
+.inc-calendar .inc-event[data-type="Resp. Isolement"] {
+  top: 18px;
+  background: #339966;
+  border-color: #003300;
+  color: #003300;
+}
+.inc-calendar .inc-event[data-type="Resp. Isolement"][data-force-highlighted="true"],
+.inc-calendar .inc-event[data-type="Resp. Isolement"][data-highlighted="true"] {
+  background: #006600;
+  border-color: #003300;
+  color: rgba(255,255,255,.9);
+}
+#inc-override-event-list [data-type="Resp. Isolement"],
+.inc-event-details-swap [data-type="Resp. Isolement"] {
+  color: #003300;
+}
+.inc-modal[data-role="Resp. Isolement"] .inc-event-details {
+  border-color: #006600;
+}
+
+
+
+
+
+.calendar-types .color-swatch[data-type="Isolement Senior"] {
+  background: #66ff99;
+}
+.module-schedule-create[data-role="Isolement Senior"] .border-bottom {
+  border-color: #66ff99;
+}
+.module-schedule[data-role="Isolement Senior"] .schedule-actions {
+  border-color: #66ff99;
+}
+.module-schedule[data-role="Isolement Senior"][data-highlighted="true"] .schedule-actions {
+  border-color: #00CC00;
+}
+.badge[data-role="Isolement Senior"] {
+  background: #66ff99;
+  color: #2C2B9D;
+}
+.inc-calendar .inc-event[data-type="Isolement Senior"] {
+  background: #66ff99;
+  color: #006600;
+  border-color: #009900;
+}
+.inc-calendar .inc-event[data-type="Isolement Senior"][data-force-highlighted="true"],
+.inc-calendar .inc-event[data-type="Isolement Senior"][data-highlighted="true"] {
+  background: #00cc00;
+  border-color: #009900;
+  color: rgba(255,255,255,.9);
+}
+#inc-override-event-list [data-type="Isolement Senior"],
+.inc-event-details-swap [data-type="Isolement Senior"] {
+  color: #66ff99;
+}
+.inc-modal[data-role="Isolement Senior"] .inc-event-details {
+  border-color: #66ff99;
+}
+
+
+
+.calendar-types .color-swatch[data-type="Isolement Junior"] {
+  background: #ccff99 ;
+}
+.module-schedule-create[data-role="Isolement Junior"] .border-bottom {
+  border-color: #ccff99;
+}
+.module-schedule[data-role="Isolement Junior"] .schedule-actions {
+  border-color: #ccff99;
+}
+.module-schedule[data-role="Isolement Junior"][data-highlighted="true"] .schedule-actions {
+  border-color: #99cc00;
+}
+.badge[data-role="Isolement Junior"] {
+  background: #ccff99;
+  color: #283E4A;
+}
+.inc-calendar .inc-event[data-type="Isolement Junior"] {
+  background: #ccff99;
+  color: #009933;
+  border-color: #009933;
+}
+.inc-calendar .inc-event[data-type="Isolement Junior"][data-force-highlighted="true"],
+.inc-calendar .inc-event[data-type="Isolement Junior"][data-highlighted="true"] {
+  background: #99cc00;
+  border-color: #009933;
+  color: rgba(255,255,255,.9);
+}
+#inc-override-event-list [data-type="Isolement Junior"],
+.inc-event-details-swap [data-type="Isolement Junior"] {
+  color: #ccff99;
+}
+.inc-modal[data-role="Isolement Junior"] .inc-event-details {
+  border-color: #ccff99;
+}
+
+
+
+
+
+.calendar-types .color-swatch[data-type="Evaluation"] {
+  background: #ff99ff;
+}
+.module-schedule-create[data-role="Evaluation"] .border-bottom {
+  border-color: #ff99ff;
+}
+.module-schedule[data-role="Evaluation"] .schedule-actions {
+  border-color: #ff99ff;
+}
+.module-schedule[data-role="Evaluation"][data-highlighted="true"] .schedule-actions {
+  border-color: #cc9900;
+}
+.badge[data-role="Evaluation"] {
+  background: #ff99ff;
+  color: #660066;
+}
+
+.inc-calendar .inc-event[data-type="Evaluation"] {
+  background: #ff99ff;
+  color: #660066;
+  border-color: #660066;
+}
+.inc-calendar .inc-event[data-type="Evaluation"][data-force-highlighted="true"],
+.inc-calendar .inc-event[data-type="Evaluation"][data-highlighted="true"] {
+  background: #ff00ff;
+  border-color: #ff00ff;
+  color: rgba(255,255,255,.9);
+}
+#inc-override-event-list [data-type="Evaluation"],
+.inc-event-details-swap [data-type="Evaluation"] {
+  color: #ff00ff;
+}
+.inc-modal[data-role="Evaluation"] .inc-event-details {
+  border-color: #ff00ff;
+}
+
+
+
+
+.calendar-types .color-swatch[data-type="Coord. PMO Jour"] {
+  background: #e6e600;
+}
+.module-schedule-create[data-role="Coord. PMO Jour"] .border-bottom {
+  border-color: #e6e600;
+}
+.module-schedule[data-role="Coord. PMO Jour"] .schedule-actions {
+  border-color: #e6e600;
+}
+.module-schedule[data-role="Coord. PMO Jour"][data-highlighted="true"] .schedule-actions {
+  border-color: #e6e600;
+}
+.badge[data-role="Coord. PMO Jour"] {
+  background: #e6e600;
+  color: #5E480B;
+}
+.inc-calendar .inc-event[data-type="Coord. PMO Jour"] {
+  background: #e6e600;
+  color: #996633;
+  border-color: #996633;
+}
+.inc-calendar .inc-event[data-type="Coord. PMO Jour"][data-force-highlighted="true"],
+.inc-calendar .inc-event[data-type="Coord. PMO Jour"][data-highlighted="true"] {
+  background: #cc9900;
+  border-color: #996633;
+  color: rgba(255,255,255,.9);
+}
+#inc-override-event-list [data-type="Coord. PMO Jour"],
+.inc-event-details-swap [data-type="Coord. PMO Jour"] {
+  color: #e6e600;
+}
+.inc-modal[data-role="Coord. PMO Jour"] .inc-event-details {
+  border-color: #e6e600;
+}
+
+
+.calendar-types .color-swatch[data-type="Coord. PMO Nuit"] {
+  background: #ff9900;
+}
+.module-schedule-create[data-role="Coord. PMO Nuit"] .border-bottom {
+  border-color: #ff9900;
+}
+.module-schedule[data-role="Coord. PMO Nuit"] .schedule-actions {
+  border-color: #ff9900;
+}
+.module-schedule[data-role="Coord. PMO Nuit"][data-highlighted="true"] .schedule-actions {
+  border-color: #cc3300;
+}
+.badge[data-role="Coord. PMO Nuit"] {
+  background: #ff9900;
+  color: #990000;
+}
+.inc-calendar .inc-event[data-type="Coord. PMO Nuit"] {
+  background: #ff9900;
+  color: #990000;
+  border-color: #990000;
+}
+.inc-calendar .inc-event[data-type="Coord. PMO Nuit"][data-force-highlighted="true"],
+.inc-calendar .inc-event[data-type="Coord. PMO Nuit"][data-highlighted="true"] {
+  background: #cc3300;
+  border-color: #990000;
+  color: rgba(255,255,255,.9);
+}
+#inc-override-event-list [data-type="Coord. PMO Nuit"],
+.inc-event-details-swap [data-type="Coord. PMO Nuit"] {
+  color: #ff9900;
+}
+.inc-modal[data-role="Coord. PMO Nuit"] .inc-event-details {
+  border-color: #ff9900;
+}
+
+
+
+.calendar-types .color-swatch[data-type="Chir. CAE-A"] {
+  background: #0099cc;
+}
+
+.module-schedule-create[data-role="Chir. CAE-A"] .border-bottom {
+  border-color: #0099cc;
+}
+.module-schedule[data-role="Chir. CAE-A"] .schedule-actions {
+  border-color: #0099cc;
+}
+.module-schedule[data-role="Chir. CAE-A"][data-highlighted="true"] .schedule-actions {
+  border-color: #003399;
+}
+.badge[data-role="Chir. CAE-A"] {
+  background: #0099cc;
+  color: #720059;
+}
+.inc-calendar .inc-event[data-type="Chir. CAE-A"] {
+  background: #0099cc;
+  color: #000066;
+  border-color: #000066;
+}
+.inc-calendar .inc-event[data-type="Chir. CAE-A"][data-force-highlighted="true"],
+.inc-calendar .inc-event[data-type="Chir. CAE-A"][data-highlighted="true"] {
+  background: #003399;
+  border-color: #000066;
+  color: rgba(255,255,255,.9);
+}
+#inc-override-event-list [data-type="Chir. CAE-A"],
+.inc-event-details-swap [data-type="Chir. CAE-A"] {
+  color: #0099cc;
+}
+.inc-modal[data-role="Chir. CAE-A"] .inc-event-details {
+  border-color: #0099cc;
+}
+
+
+
+.calendar-types .color-swatch[data-type="Chir. PMO Pancreas"] {
+  background: #66ffff;
+}
+.module-schedule-create[data-role="Chir. PMO Pancreas"] .border-bottom {
+  border-color: #66ffff;
+}
+.module-schedule[data-role="Chir. PMO Pancreas"] .schedule-actions {
+  border-color: #66ffff;
+}
+.module-schedule[data-role="Chir. PMO Pancreas"][data-highlighted="true"] .schedule-actions {
+  border-color: #004d4d;
+}
+.badge[data-role="Chir. PMO Pancreas"] {
+  background: #66ffff;
+  color: #720059;
+}
+.inc-calendar .inc-event[data-type="Chir. PMO Pancreas"] {
+  background: #66ffff;
+  color: #006666;
+  border-color: #006666;
+}
+.inc-calendar .inc-event[data-type="Chir. PMO Pancreas"][data-force-highlighted="true"],
+.inc-calendar .inc-event[data-type="Chir. PMO Pancreas"][data-highlighted="true"] {
+  background: #004d4d;
+  border-color: #006666;
+  color: rgba(255,255,255,.9);
+}
+#inc-override-event-list [data-type="Chir. PMO Pancreas"],
+.inc-event-details-swap [data-type="Chir. PMO Pancreas"] {
+  color: #3399ff;
+}
+.inc-modal[data-role="Chir. PMO Pancreas"] .inc-event-details {
+  border-color: #3399ff;
+}
+
+
+.calendar-types .color-swatch[data-type="Endocrino"] {
+  background: #ff9999;
+}
+.module-schedule-create[data-role="Endocrino"] .border-bottom {
+  border-color: #ff9999;
+}
+.module-schedule[data-role="Endocrino"] .schedule-actions {
+  border-color: #ff9999;
+}
+.module-schedule[data-role="Endocrino"][data-highlighted="true"] .schedule-actions {
+  border-color: #e60000;
+}
+.badge[data-role="Endocrino"] {
+  background: #ff9999;
+  color: #720059;
+}
+.inc-calendar .inc-event[data-type="Endocrino"] {
+  background: #ff9999;
+  color: #720059;
+  border-color: #720059;
+}
+.inc-calendar .inc-event[data-type="Endocrino"][data-force-highlighted="true"],
+.inc-calendar .inc-event[data-type="Endocrino"][data-highlighted="true"] {
+  background: #e60000;
+  border-color: #720059;
+  color: rgba(255,255,255,.9);
+}
+#inc-override-event-list [data-type="Endocrino"],
+.inc-event-details-swap [data-type="Endocrino"] {
+  color: #ff9999;
+}
+.inc-modal[data-role="Endocrino"] .inc-event-details {
+  border-color: #ff9999;
+}
+
+
+.calendar-types .color-swatch[data-type="Interne PMO Pancreas"] {
+  background: #d9d9d9;
+}
+.module-schedule-create[data-role="Interne PMO Pancreas"] .border-bottom {
+  border-color: #d9d9d9;
+}
+.module-schedule[data-role="Interne PMO Pancreas"] .schedule-actions {
+  border-color: #d9d9d9;
+}
+.module-schedule[data-role="Interne PMO Pancreas"][data-highlighted="true"] .schedule-actions {
+  border-color: #595959;
+}
+.badge[data-role="Interne PMO Pancreas"] {
+  background: #d9d9d9;
+  color: #720059;
+}
+.inc-calendar .inc-event[data-type="Interne PMO Pancreas"] {
+  background: #d9d9d9;
+  color: #1a1a1a;
+  border-color: #1a1a1a;
+}
+.inc-calendar .inc-event[data-type="Interne PMO Pancreas"][data-force-highlighted="true"],
+.inc-calendar .inc-event[data-type="Interne PMO Pancreas"][data-highlighted="true"] {
+  background: #595959;
+  border-color: #1a1a1a;
+  color: rgba(255,255,255,.9);
+}
+#inc-override-event-list [data-type="Interne PMO Pancreas"],
+.inc-event-details-swap [data-type="Interne PMO Pancreas"] {
+  color: #d9d9d9;
+}
+.inc-modal[data-role="Interne PMO Pancreas"] .inc-event-details {
+  border-color: #d9d9d9;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

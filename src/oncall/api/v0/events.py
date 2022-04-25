@@ -2,9 +2,10 @@
 # See LICENSE in the project root for license information.
 
 import time
+from ...constants import AUTH_USER_CAL_MOD
 from falcon import HTTP_201, HTTPError, HTTPBadRequest
 from ujson import dumps as json_dumps
-from ...auth import login_required, check_calendar_auth
+from ...auth import login_required, check_calendar_auth, check_team_auth
 from ... import db, constants
 from ...utils import (
     load_json_body, user_in_team_by_name, create_notification, create_audit
@@ -204,7 +205,6 @@ def on_get(req, resp):
     connection.close()
     resp.body = json_dumps(data)
 
-
 @login_required
 def on_post(req, resp):
     """
@@ -255,7 +255,9 @@ def on_post(req, resp):
     if data['start'] >= data['end']:
         raise HTTPBadRequest('Invalid event', 'Event must start before it ends')
     check_calendar_auth(data['team'], req)
-
+    global AUTH_USER_CAL_MOD
+    if not AUTH_USER_CAL_MOD:
+        check_team_auth(data['team'], req)
     columns = ['`start`', '`end`', '`user_id`', '`team_id`', '`role_id`']
     values = ['%(start)s', '%(end)s',
               '(SELECT `id` FROM `user` WHERE `name`=%(user)s)',

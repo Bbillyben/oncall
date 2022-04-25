@@ -173,19 +173,23 @@ def insert_schedule_events(schedule_id, events, cursor):
     """
     Helper to insert schedule events for a schedule
     """
+    print ('req events', events)
     insert_events = '''INSERT INTO `schedule_event` (`schedule_id`, `start`, `duration`)
                        VALUES (%(schedule)s, %(start)s, %(duration)s)'''
     # Merge consecutive events for db storage. This creates an equivalent, simpler
     # form of the schedule for the scheduler.
     raw_events = sorted(events, key=lambda e: e['start'])
+    print ('raw evt : ', raw_events)
     new_events = []
     for e in raw_events:
-        if len(new_events) > 0 and e['start'] == new_events[-1]['start'] + new_events[-1]['duration']:
-            new_events[-1]['duration'] += e['duration']
-        else:
-            new_events.append(e)
+    #    if len(new_events) > 0 and e['start'] == new_events[-1]['start'] + new_events[-1]['duration']:
+    #        new_events[-1]['duration'] += e['duration']
+    #    else:
+         new_events.append(e)
+    
     for e in new_events:
         e['schedule'] = schedule_id
+    print ('insert events :', new_events)
     cursor.executemany(insert_events, new_events)
 
 
@@ -373,6 +377,9 @@ def on_post(req, resp, team, roster):
     data = load_json_body(req)
     data['team'] = unquote(team)
     data['roster'] = unquote(roster)
+    print('*********************** POST SCHEDULE *************************')
+    print('data : ', data)
+
     check_team_auth(data['team'], req)
     missing_params = required_params - set(data.keys())
     if missing_params:

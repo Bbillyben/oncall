@@ -954,7 +954,7 @@ var oncall = {
         escalatePlanSelect: '#escalate-plan',
         cardExtra: '.card-inner[data-collapsed]',
         cardExtraChevron: '.card-inner[data-collapsed] .svg-icon-chevron',
-        oncallNowDisplayRoles: ['primary', 'secondary', 'manager'],
+        oncallNowDisplayRoles: ['Resp. Isolement', 'Isolement Senior', 'Isolement Junior', 'Evaluation', 'Coord. PMO Jour', 'Coord. PMO Nuit', 'Chir. CAE-A', 'Chir. PMO Pancreas', 'Endocrino', 'Interne PMO Pancreas'],
         timezoneDisplay: '.timezone-display',
         teamName: null,
         teamData: null

@@ -1,4 +1,3 @@
-#######################
 ### Oncall-api settings
 #######################
 server:
@@ -32,7 +31,7 @@ session:
 # Debug mode disables authentication, allows access to debug-only API endpoints
 # (used for testing), allows HTTP access, and removes some security headers
 # from responses.
-debug: True
+debug: False
 
 ## To run Oncall without https, set this value to True
 ## WARNING: use this only for debugging purposes, to avoid sending
@@ -44,28 +43,28 @@ debug: True
 # class, with two required methods: __init__(self, config) and
 # authenticate(self, username, password)
 auth:
-  debug: True
-  module: 'oncall.auth.modules.debug'  # Auth module where Authenticator is implemented
+    debug: False
+    module: 'oncall.auth.modules.debug'  # Auth module where Authenticator is implemented
 
 # Example configuration for LDAP-based auth
-#   module: 'oncall.auth.modules.ldap_example'
-#   module: 'oncall.auth.modules.ldap_import' # for automatically import user at first connexion
-#   ldap_url: 'ldaps://example.com'
-#   ldap_user_suffix: '@example.biz'
+    module: 'oncall.auth.modules.ldap_example'
+    module: 'oncall.auth.modules.ldap_import' # for automatically import user at first connexion
+    ldap_url: 'ldap://IP'
+    ldap_user_suffix: ''
 #   ldap_cert_path: '/etc/ldap_cert.pem'
-#   ldap_bind_user: 'cn=binduser,ou=services,dc=company,dc=org'
-#   ldap_bind_password: 'abc123'
-#   ldap_base_dn: 'ou=accounts,dc=company,dc=org'
-#   ldap_search_filter: '(uid=%s)'
+    ldap_bind_user: 'cn=admin,dc=site,dc=fr'
+    ldap_bind_password: 'pass1234'
+    ldap_base_dn: 'dc=site,dc=fr'
+    ldap_search_filter: '(uid=%s)'
 # options used by the ldap_import module.
-#   import_user: True
-#   attrs:
-#     username: 'uid'
-#     full_name: 'displayName'
-#     email: 'mail'
-#     mobile: 'mobile'
-#     sms: 'phone'
-#     slack: 'uid'
+    import_user: True
+    attrs:
+      username: 'uid'
+      full_name: 'displayName'
+      email: 'mail'
+      mobile: 'mobile'
+      sms: 'mobile'
+      slack: 'uid'
 
 ############################
 ### Oncall-notifier settings
@@ -78,10 +77,16 @@ notifier:
 notifications:
   # The notifier will send reminders for events with these roles
   default_roles:
-    - "primary"
-    - "secondary"
-    - "shadow"
-    - "manager"
+    - "Resp. Isolement"
+    - "Isolement Senior"
+    - "Isolement Junior"
+    - "Evaluation"
+    - "Coord. PMO Jour"
+    - "Coord. PMO Nuit"
+    - "Chir. CAE-A"
+    - "Chir. PMO Pancreas"
+    - "Endocrino"
+    - "Interne PMO Pancreas"
   # Reminders will be sent $x seconds before events start, for $x in this list
   default_times:
     - 86400
@@ -151,13 +156,13 @@ header_color: '#3a3a3a'
 # The base url for the public oncall calendar. This url has to open to the public internet for most web calendar subscriptions to work.
 # The public calendar url will be formatted as follows: "{public_calendar_base_url}/{ical_key}".
 # Replace localhost with the hostname of the oncall or iris-relay instance.
-public_calendar_base_url: 'http://localhost:8080/api/v0/ical'
+public_calendar_base_url: 'https://oct.legendre-ratajczak.fr/api/v0/ical'
 # Additional message you want to put here, could be a link to the FAQ
 public_calendar_additional_message: 'Link to FAQ'
 
 # Integration with Iris, allowing for escalation from Oncall
 iris_plan_integration:
-  activated: True
+  activated: False
   # Iris app and key settings
   app: oncall
   api_key: magic
@@ -192,7 +197,11 @@ slack_instance: foobar
 # Setting to determine whether the Oncall API/frontend is available unauthenticated.
 # Set to True to force login splash page and authentication on API calls and False to allow read
 # APIs without authentication
-require_auth: False
+require_auth: True
+usercontact_ui_readonly: False
+
+# Setting to determine whether the autheticated user can modify calendar entries.
+auth_user_cal_mod: False
 
 ###########################
 ### Oncall bonus management
@@ -209,26 +218,26 @@ require_auth: False
 ### Oncall user management
 ##########################
 
-# # Configure which user_sync module is being used
-# user_sync:
-#   module: 'oncall.user_sync.ldap_sync'
+# Configure which user_sync module is being used
+user_sync:
+  module: 'oncall.user_sync.ldap_sync'
 #
 # # User management by syncing from Slack
 # slack:
 #   oauth_access_token: 'foo'
 #
 # # User management by syncing from LDAP
-# ldap_sync:
-#   url: 'ldaps://example.com'
-#   base: 'ou=Staff Users,dc=multiforest,dc=biz'
-#   user: 'CN=example,DC=multiforest,DC=biz'
-#   password: 'password'
+ldap_sync:
+  url: 'ldap://127.0.0.1'
+  base: 'dc=site,dc=fr'
+  user: 'CN=admin,DC=site,DC=fr'
+  password: 'pass1234'
 #   cert_path: '/etc/ldap_cert.pem'
-#   query: '(&(objectClass=userProxy)(employeeId=*))'
-#   # Map of Oncall user information to LDAP attribute
-#   attrs:
-#     username: 'sAMAccountName'
-#     full_name: 'displayName'
-#     mail: 'mail'
-#     mobile: 'mobile'
+  query: '(uid=*)'
+   # Map of Oncall user information to LDAP attribute
+  attrs:
+    username: 'uid'
+    full_name: 'displayName'
+    mail: 'mail'
+    mobile: 'mobile'
 #   image_url: 'https://image.example.com/api/%s/picture'

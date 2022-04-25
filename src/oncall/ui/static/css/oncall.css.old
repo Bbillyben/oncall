@@ -828,7 +828,7 @@ body[data-authenticated="false"] #pinned-teams {
   -webkit-user-select: none;
   user-select: none;
   text-transform: capitalize;
-  width: 150px;
+  width: 70px;
 }
 
 .calendar-types .color-swatch {
@@ -840,7 +840,29 @@ body[data-authenticated="false"] #pinned-teams {
   top: 2px;
 }
 
+.calendar-types .color-swatch[data-type="primary"] {
+  background: #F6A16C;
+}
 
+.calendar-types .color-swatch[data-type="secondary"] {
+  background: #B2B0FA;
+}
+
+.calendar-types .color-swatch[data-type="shadow"] {
+  background: #ACB9C2;
+}
+
+.calendar-types .color-swatch[data-type="manager"] {
+  background: #65C3E8;
+}
+
+.calendar-types .color-swatch[data-type="vacation"] {
+  background: #91C475;
+}
+
+.calendar-types .color-swatch[data-type="unavailable"] {
+  background: #FF91CF;
+}
 
 .calendar-tip {
   line-height: 28px;
@@ -1021,7 +1043,29 @@ div[data-admin="false"] .team-info .toggle-rotation {
   border-bottom: 5px solid #FDE3D2;
 }
 
+.module-schedule-create[data-role="secondary"] .border-bottom {
+  border-color: #E6E6FF;
+}
 
+.module-schedule-create[data-role="shadow"] .border-bottom {
+  border-color: #ACB9C2;
+}
+
+.module-schedule-create[data-role="manager"] .border-bottom {
+  border-color: #CAEDFF;
+}
+
+.module-schedule-create[data-role="director"] .border-bottom {
+  border-color: #FFC100;
+}
+
+.module-schedule-create[data-role="vacation"] .border-bottom {
+  border-color: #91C475;
+}
+
+.module-schedule-create[data-role="unavailable"] .border-bottom {
+  border-color: #FF91CF;
+}
 
 .module-schedule-create .schedule-type-container {
   margin-top: 5px;
@@ -1084,7 +1128,7 @@ div[data-admin="false"] .team-info .toggle-rotation {
   width: 24%;
   margin: 0 .5%;
   float: left;
-  transition: box-Isolement Junior .15s;
+  transition: box-shadow .15s;
 }
 
 .module-schedule .schedule-actions {
@@ -1093,13 +1137,61 @@ div[data-admin="false"] .team-info .toggle-rotation {
   margin-top: 10px;
 }
 
-
-
-.module-schedule[data-highlighted="true"] {
-  box-Isolement Junior: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.2);
+.module-schedule[data-role="secondary"] .schedule-actions {
+  border-color: #E6E6FF;
 }
 
+.module-schedule[data-role="shadow"] .schedule-actions {
+  border-color: #ACB9C2;
+}
 
+.module-schedule[data-role="manager"] .schedule-actions {
+  border-color: #CAEDFF;
+}
+
+.module-schedule[data-role="director"] .schedule-actions {
+  border-color: #FFC100;
+}
+
+.module-schedule[data-role="vacation"] .schedule-actions {
+  border-color: #91C475;
+}
+
+.module-schedule[data-role="unavailable"] .schedule-actions {
+  border-color: #FF91CF;
+}
+
+.module-schedule[data-highlighted="true"] {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.module-schedule[data-role="primary"][data-highlighted="true"] .schedule-actions {
+  border-color: #EF7E37;
+}
+
+.module-schedule[data-role="secondary"][data-highlighted="true"] .schedule-actions {
+  border-color: #827BE9;
+}
+
+.module-schedule[data-role="shadow"][data-highlighted="true"] .schedule-actions {
+  border-color: #7A8B98;
+}
+
+.module-schedule[data-role="manager"][data-highlighted="true"] .schedule-actions {
+  border-color: #0091CA;
+}
+
+.module-schedule[data-role="director"][data-highlighted="true"] .schedule-actions {
+  border-color: #C89B1C;
+}
+
+.module-schedule[data-role="vacation"][data-highlighted="true"] .schedule-actions {
+  border-color: #469A1F;
+}
+
+.module-schedule[data-role="unavailable"][data-highlighted="true"] .schedule-actions {
+  border-color: #FF1B90;
+}
 
 .module-schedule .label-col {
   width: 27%;
@@ -1234,7 +1326,7 @@ overflow: hidden;
   width: 24%;
   margin: 0 .5%;
   float: left;
-  transition: box-Isolement Junior .15s;
+  transition: box-shadow .15s;
 }
 
 .module-subscription .subscription-actions {
@@ -1322,7 +1414,7 @@ overflow: hidden;
   width: 24%;
   margin: 0 .5%;
   float: left;
-  transition: box-Isolement Junior .15s;
+  transition: box-shadow .15s;
 }
 
 .module-notification .notification-actions {
@@ -1721,7 +1813,35 @@ footer li:first-child {
   color: rgba(0,0,0,.55);
 }
 
+.badge[data-role="secondary"] {
+  background: #E6E6FF;
+  color: #2C2B9D;
+}
 
+.badge[data-role="shadow"] {
+  background: #E1E9EE;
+  color: #283E4A;
+}
+
+.badge[data-role="manager"] {
+  background: #CAEDFF;
+  color: #2B7EAC;
+}
+
+.badge[data-role="director"] {
+  background: #FFEEAD;
+  color: #5E480B;
+}
+
+.badge[data-role="vacation"] {
+  background: #DCF0CB;
+  color: #0E4507;
+}
+
+.badge[data-role="unavailable"] {
+  background: #FFDFF6;
+  color: #720059;
+}
 
 .module {
   border: 1px solid #dddedf;
@@ -1783,9 +1903,9 @@ footer li:first-child {
 }
 
 .btn {
-  box-Isolement Junior: none;
+  box-shadow: none;
   border-radius: 2px;
-  text-Isolement Junior: none;
+  text-shadow: none;
   background-image: none;
 }
 
@@ -1806,7 +1926,7 @@ footer li:first-child {
   background: none;
   padding: 6px 15px;
   border: none;
-  box-Isolement Junior: inset 0 0 0 1px #FFF;
+  box-shadow: inset 0 0 0 1px #FFF;
   color: #FFF;
   font-weight: 100;
   letter-spacing: 1px;
@@ -1814,7 +1934,7 @@ footer li:first-child {
 
 .btn.btn-white:hover {
   color: #FFF;
-  box-Isolement Junior: inset 0 0 0 2px #FFF;
+  box-shadow: inset 0 0 0 2px #FFF;
 }
 
 .btn.btn-blue {
@@ -1860,7 +1980,7 @@ footer li:first-child {
   border-radius: 0;
   border: none;
   border-bottom: 1px solid #ccc;
-  box-Isolement Junior: none;
+  box-shadow: none;
 }
 
 input[type="number"].form-control.border-bottom {
@@ -1870,7 +1990,7 @@ input[type="number"].form-control.border-bottom {
 
 .form-control.border-bottom:focus {
   outline: none;
-  box-Isolement Junior: none;
+  box-shadow: none;
   border-bottom: 1px solid #008CC9;
 }
 
@@ -1881,8 +2001,8 @@ select.form-control {
   background-clip: content-box;
   box-sizing: border-box;
   border: 1px solid rgba(0,0,0,.25);
-  -webkit-transition: box-Isolement Junior .15s;
-  transition: box-Isolement Junior .15s;
+  -webkit-transition: box-shadow .15s;
+  transition: box-shadow .15s;
   color: rgba(0,0,0,.85);
   padding: 4px 12px;
   padding-right: 25px;
@@ -1964,13 +2084,13 @@ label {
   transition: background-color .2s ease-out;
   background-color: #d0d3d6;
   border: 1px solid #a0a3a6;
-  box-Isolement Junior: none;
+  box-shadow: none;
 }
 
 .toggle-input input[type="checkbox"]:checked+label:before {
   background-color: #0084bf;
   border-color: transparent;
-  box-Isolement Junior: 0 0 0 10px #0084BF inset;
+  box-shadow: 0 0 0 10px #0084BF inset;
 }
 
 .toggle-input input[type="checkbox"]+label:after {
@@ -1986,7 +2106,7 @@ label {
   left: auto;
   background-image: none;
   transform: scale(1);
-  box-Isolement Junior: rgba(0, 0, 0, 0.0980392) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 2px 3px;
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 2px 3px;
   border-radius: 13px;
   transition: all 0.3s ease;
 }
@@ -2156,4 +2276,3 @@ table.dataTable thead th {
   white-space: pre;
   font-family: monospace;
 }
-

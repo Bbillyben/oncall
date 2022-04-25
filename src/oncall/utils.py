@@ -69,7 +69,7 @@ def create_notification(context, team_id, role_ids, type_name, users_involved, c
 def subscribe_notifications(team, user, cursor):
     cursor.execute('SELECT id FROM notification_setting WHERE user_id = (SELECT id FROM user WHERE name = %s) '
                    'AND team_id = (SELECT id FROM team WHERE name = %s)', (user, team))
-
+    
     if cursor.rowcount == 0:
         for time in constants.DEFAULT_TIMES:
             for mode in constants.DEFAULT_MODES:
@@ -77,15 +77,18 @@ def subscribe_notifications(team, user, cursor):
                                                                       `type_id`, `time_before`)
                                   VALUES ((SELECT id FROM user WHERE name = %s),
                                           (SELECT id FROM team WHERE name = %s),
-                                          (SELECT id FROM contact_mode WHERE name = %s LIMIT 1),
+                                          (SELECT id FROM contact_mode WHERE name = %s),
                                           (SELECT id FROM notification_type WHERE name = %s),
                                            %s);''',
                                (user, team, mode, ONCALL_REMINDER, time))
+            
             setting_id = cursor.lastrowid
             query_vals = ', '.join(['(%s, (SELECT `id` FROM `role` WHERE `name` = "%s"))' %
                                     (setting_id, role) for role in constants.DEFAULT_ROLES])
-            cursor.execute('INSERT INTO `setting_role` VALUES ' + query_vals)
+            print('exec insert : ', query_vals)
 
+            cursor.execute('INSERT INTO `setting_role` VALUES ' + query_vals)
+           
 
 def unsubscribe_notifications(team, user, cursor):
     cursor.execute('DELETE FROM notification_setting WHERE user_id = (SELECT id FROM user WHERE name = %s) '

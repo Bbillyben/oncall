@@ -34,7 +34,7 @@ assets_env.register('css_libs', Bundle(
     'css/jquery.dataTables.min.css',
     output='bundles/libs.css'))
 assets_env.register('oncall_css', Bundle(
-    'css/oncall.css', 'css/incalendar.css', output='bundles/oncall.css'))
+    'css/oncall.css', 'css/incalendar.css', 'css/role.css', output='bundles/oncall.css'))
 assets_env.register('loginsplash_css', Bundle(
     'css/loginsplash.css', output='bundles/loginsplash.css'))
 assets_env.register('loginsplash_js', Bundle(
@@ -71,11 +71,15 @@ HEADER_COLOR = None
 IRIS_PLAN_SETTINGS = None
 USERCONTACT_UI_READONLY = None
 LOGIN_REQUIRED = None
-
+AUTH_USER_CAL_MOD = None
 
 def index(req, resp):
     user = req.env.get('beaker.session', {}).get('user')
+    print('############################ user :', user)
+    print('login required : ',LOGIN_REQUIRED)
+    print('aut user cal mod : ',AUTH_USER_CAL_MOD)
     if user is None and LOGIN_REQUIRED:
+        print('Goto splash')
         resp.content_type = 'text/html'
         resp.body = jinja2_env.get_template('loginsplash.html').render()
     else:
@@ -139,6 +143,7 @@ def init(application, config):
     global PUBLIC_CALENDAR_BASE_URL
     global PUBLIC_CALENDAR_ADDITIONAL_MESSAGE
     global LOGIN_REQUIRED
+    global AUTH_USER_CAL_MOD
     SLACK_INSTANCE = config.get('slack_instance')
     HEADER_COLOR = config.get('header_color', '#3a3a3a')
     IRIS_PLAN_SETTINGS = config.get('iris_plan_integration')
@@ -146,7 +151,7 @@ def init(application, config):
     PUBLIC_CALENDAR_BASE_URL = config.get('public_calendar_base_url')
     PUBLIC_CALENDAR_ADDITIONAL_MESSAGE = config.get('public_calendar_additional_message')
     LOGIN_REQUIRED = config.get('require_auth')
-
+    AUTH_USER_CAL_MOD = config.get('auth_user_cal_mod')
     application.add_sink(index, '/')
     application.add_route('/static/bundles/{filename}',
                           StaticResource('/static/bundles'))

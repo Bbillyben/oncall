@@ -112,6 +112,9 @@ def on_put(req, resp, schedule_id):
     """
     data = load_json_body(req)
 
+    print('*********************** POST SCHEDULE UNIOQUE *************************')
+    print('data : ', data)
+
     # Get rid of extraneous column data (so pymysql doesn't try to escape it)
     events = data.pop('events', None)
     scheduler = data.pop('scheduler', None)
@@ -134,7 +137,6 @@ def on_put(req, resp, schedule_id):
         cursor.execute('SELECT duration FROM schedule_event WHERE schedule_id = %s', schedule_id)
         existing_events = [{'duration': row[0]} for row in cursor.fetchall()]
         simple = validate_simple_schedule(existing_events)
-
     # Get advanced mode value (existing or new)
     advanced_mode = data.get('advanced_mode')
     if advanced_mode is None:

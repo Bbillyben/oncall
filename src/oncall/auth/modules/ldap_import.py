@@ -56,6 +56,7 @@ class Authenticator:
                 result = connection.search_s(self.base_dn, ldap.SCOPE_SUBTREE, sfilter, attrs)
                 if len(result) < 1:
                     return False
+                print('auth, ldate res 1:', result)
                 auth_user = result[0][0]
                 ldap_attrs = result[0][1]
                 for key, val in self.attrs.items():

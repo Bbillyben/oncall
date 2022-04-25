@@ -10,7 +10,6 @@ from .users import get_user_data
 from ... import db
 from ...utils import load_json_body, subscribe_notifications, create_audit
 from ...constants import ROSTER_USER_ADDED
-import logging
 
 
 def on_get(req, resp, team, roster):
@@ -113,10 +112,7 @@ def on_post(req, resp, team, roster):
                       UNION ALL
                       (SELECT `id` FROM `user` WHERE `name`=%s)''', (team, user_name))
     results = [r[0] for r in cursor]
-    print('the result is :',results)
-    print('length : ',len(results))
-    print('test : ',len(results) < 2)
-    if len(results) < 2 :
+    if len(results) < 2:
         raise HTTPError('422 Unprocessable Entity', 'IntegrityError', 'invalid team or user')
 
     # TODO: validate roster
@@ -131,11 +127,9 @@ def on_post(req, resp, team, roster):
                           JOIN `team` ON `team`.`id`=`roster`.`team_id`
                           WHERE `team`.`name`=%s AND `roster`.`name`=%s''',
                        (team, roster))
-        
         if cursor.rowcount == 0:
-              raise HTTPNotFound()
+            raise HTTPNotFound()
         roster_id, roster_priority = cursor.fetchone()
-        
         cursor.execute('''INSERT INTO `roster_user` (`user_id`, `roster_id`, `in_rotation`, `roster_priority`)
                           VALUES (
                               %s,
@@ -144,7 +138,6 @@ def on_post(req, resp, team, roster):
                               %s
                           )''',
                        (user_id, roster_id, in_rotation, roster_priority))
-        
         cursor.execute('''INSERT INTO `schedule_order`
                           SELECT `schedule_id`, %s, COALESCE(MAX(`schedule_order`.`priority`), -1) + 1
                           FROM `schedule_order`
@@ -154,19 +147,16 @@ def on_post(req, resp, team, roster):
                           WHERE `roster`.`name` = %s AND `team`.`name` = %s
                           GROUP BY `schedule_id`''',
                        (user_id, roster, team))
-        
         # subscribe user to notifications
         subscribe_notifications(team, user_name, cursor)
-
 
         create_audit({'roster': roster, 'user': user_name, 'request_body': data}, team,
                      ROSTER_USER_ADDED, req, cursor)
         connection.commit()
-    except db.IntegrityError as e:
-        print('error : ',e)
+    except db.IntegrityError:
         raise HTTPError('422 Unprocessable Entity',
                         'IntegrityError',
-                        'the great user "%(name)s" is already in the roster' % data)
+                        'user "%(name)s" is already in the roster' % data)
     finally:
         cursor.close()
         connection.close()
