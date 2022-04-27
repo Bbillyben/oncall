@@ -46,6 +46,14 @@ class ReqBodyMiddleware(object):
 
 class AuthMiddleware(object):
     def process_resource(self, req, resp, resource, params):
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~ process ressource auth')
+        print(' - self', self)
+        print(' - req :', req)
+        print('     - req header : ', req.get_header('AUTHORIZATION'))
+        print(' - resp :', resp)
+        print(' - resource : ', resource)
+        print('    - res allow no auth : ', hasattr(resource, 'allow_no_auth'))
+        print(' - params : ', params) 
         try:
             if resource.allow_no_auth:
                 return
@@ -64,7 +72,8 @@ application = None
 
 def init_falcon_api(config):
     global application
-    cors = CORS(allow_origins_list=['*'])
+    print('******************* cors origin liste :',config.get('allow_origins_list', []))
+    cors = CORS(allow_origins_list=config.get('allow_origins_list', []))
     middlewares = [
         SecurityHeaderMiddleware(),
         ReqBodyMiddleware(),
