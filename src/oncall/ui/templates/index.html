@@ -270,21 +270,33 @@
 <!--// landing teams partial -->
 <script id="landing-teams-inner-template" type="text/x-handlebars-template">
   <ul class="card-inner-wrapper">
-    {{#ifNotEmpty data.current.primary}}
+    {{#ifNotEmpty data.current}}
+     
       <span class="subheading light">On Call Now</span>
-      <li class="card-inner border-bottom" data-card-name="{{data.current.primary.0.full_name}}">
-        <img class="card-picture" src="{{defaultPhoto data.current.primary.0.photo_url}}" alt="{{data.current.primary.0.full_name}}">
-        <h4><strong><a class="landing-teams-name" target="_blank" href="mailto:{{data.current.primary.0.user_contacts.email}}">{{data.current.primary.0.full_name}}</a></strong> <span class="badge pull-right" data-role="{{data.current.primary.0.role}}">{{data.current.primary.0.role}}</span></h4>
-
-        {{#if data.current.primary.0.user_contacts.call}}
-          <span class="light"><a href="tel:{{data.current.primary.0.user_contacts.call}}">{{data.current.primary.0.user_contacts.call}}</a></span>
-        {{else}}
-          <span class="error-text">No phone number found!</span>
-        {{/if}}
-        <ul class="border-top card-content">
-          <li class="small light">{{convertUnixTime data.current.primary.0.start}} - {{convertUnixTime data.current.primary.0.end}}</li>
-        </ul>
-      </li>
+      {{#each data.current}}
+        {{#each this}}
+        <li class="card-inner border-bottom" data-card-name="{{full_name}}">
+          <img class="card-picture" src="{{defaultPhoto photo_url}}" alt="{{full_name}}">
+          <h4><strong><a class="landing-teams-name" target="_blank" href="mailto:{{user_contacts.email}}">{{full_name}}</a></strong> <span class="badge pull-right" data-role="{{role}}">{{role}}</span></h4>
+          <ul >
+              {{#if user_contacts.call}}
+                <li>Call : <span class="light"><a href="tel:{{user_contacts.call}}">{{user_contacts.call}}</a></span></li>
+              {{else}}
+                <li><span class="error-text">No phone number found!</span></li>
+              {{/if}}
+              {{#if user_contacts.sms}}
+                <li>Sms :<span class="light"> <a href="tel:{{user_contacts.sms}}">{{user_contacts.sms}}</a></span></li>
+              {{/if}}
+              {{#if user_contacts.email}}
+                <li>E-mail :<span class="light"> <a target="_blank" href="mailto:{{user_contacts.email}}"> {{user_contacts.email}} </a></span></li>
+              {{/if}}
+          </ul>
+          <ul class="border-top card-content">
+            <li class="small light">{{convertUnixTime start 'lll'}} - {{convertUnixTime   end 'lll'}}</li>
+          </ul>
+        </li>
+        {{/each}}
+      {{/each}}
     {{else}}
       <div style="text-align:center;">No on call data found</div>
     {{/ifNotEmpty}}

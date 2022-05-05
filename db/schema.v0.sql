@@ -135,12 +135,16 @@ CREATE TABLE IF NOT EXISTS `role` (
   UNIQUE INDEX `name_unique` (`name` ASC));
 
 INSERT IGNORE INTO `role` (`name`, `display_order`)
-VALUES ('primary', 1),
-       ('secondary', 2),
-       ('shadow', 3),
-       ('manager', 4),
-       ('vacation', 5),
-       ('unavailable', 6);
+VALUES ('Resp. Isolement', 1),
+       ('Isolement Senior', 2),
+       ('Isolement Junior', 3),
+       ('Evaluation', 4),
+       ('Coord. PMO Jour', 5),
+       ('Coord. PMO Nuit', 6),
+       ('Chir. CAE-A', 7),
+       ('Chir. PMO Pancreas', 8),
+       ('Endocrino', 9),
+       ('Interne PMO Pancreas', 10);
 
 -- -----------------------------------------------------
 -- Table `scheduler``
