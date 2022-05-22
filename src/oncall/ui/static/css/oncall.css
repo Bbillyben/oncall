@@ -1,4 +1,6 @@
-/*
+/*/*
+ * Base structure
+ */
  * Base structure
  */
 
@@ -1221,7 +1223,32 @@ overflow: hidden;
 #user-settings-form button {
   min-width: 95px;
 }
+/*
+ * Password page
+ */
+ #user-password-form td:first-child {
+  width: 15%;
+}
 
+#user-password-form td {
+  padding: 10px 0;
+}
+
+#user-password-form .profile-picture img {
+  width: 60px;
+  height: 60px;
+}
+
+#user-password-form input,
+#user-password-form select {
+  width: 20%;
+  max-width: 200px;
+  display: inline-block;
+}
+
+#user-password-form button {
+  min-width: 95px;
+}
 /*
  * Team subscription page
  */
@@ -1395,6 +1422,7 @@ footer {
   height: 20px;
   width: 100%;
   text-align: center;
+  color: rgba(0,0,0,0.55);
 }
 
 footer li {
@@ -1720,8 +1748,6 @@ footer li:first-child {
   background: #FFF;
   color: rgba(0,0,0,.55);
 }
-
-
 
 .module {
   border: 1px solid #dddedf;
@@ -2157,3 +2183,25 @@ table.dataTable thead th {
   font-family: monospace;
 }
 
+
+/* 
+* For page change password 
+*/
+.warning-red {
+  border-color: red;
+  border-width: 2px;
+}
+.warning-red:focus {
+border: 1px solid #FF0000;
+}
+
+.warning-green {
+  border-color: lightgreen;
+  border-width: 2px;
+}
+.warning-green:focus {
+  border: 1px solid #00FF00;
+}
+#user-password-form table{
+  margin-left: 25px;
+}

@@ -66,11 +66,12 @@ def init(application, config):
         from oncall.api.v0.bonus_events import PaidEvents
         application.add_route('/api/v0/events/bonus', PaidEvents(config))
 
-    from . import users, user, user_teams, user_notifications
+    from . import users, user, user_teams, user_notifications, user_password
     application.add_route('/api/v0/users', users)
     application.add_route('/api/v0/users/{user_name}', user)
     application.add_route('/api/v0/users/{user_name}/teams', user_teams)
     application.add_route('/api/v0/users/{user_name}/notifications', user_notifications)
+    application.add_route('/api/v0/users/{user_name}/password', user_password)
 
     from . import user_notification
     application.add_route('/api/v0/notifications/{notification_id}', user_notification)

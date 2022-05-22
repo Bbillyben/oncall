@@ -1432,6 +1432,7 @@
   <nav class="subnav">
     <ul class="container-fluid">
       <li {{#isEqual page "settings"}}class="active"{{/isEqual}} href="/user/{{username}}" data-navigo> Settings </li>
+	  <li {{#isEqual page "password"}}class="active"{{/isEqual}} href="/user/{{username}}/password" data-navigo> Password Management </li>
       <li {{#isEqual page "notifications"}}class="active"{{/isEqual}} href="/user/{{username}}/notifications" data-navigo> Notifications </li>
       <li {{#isEqual page "ical_key"}}class="active"{{/isEqual}} href="/user/{{username}}/ical_key" data-navigo> Public Calendar Keys </li>
     </ul>
@@ -1506,7 +1507,44 @@
     </form>
   </div>
 </script>
-
+<!--// **********************
+  Password Page
+*********************** //-->
+<script id="password-template" type="text/x-handlebars-template">
+  <div class="subheader-wrapper">
+    {{>settings-subheader username=name page="password"}}
+  </div>
+  <div class="main container-fluid">
+      <h3 class="module-heading"> Password modification</h3>
+  <form class="module clearfix" id="user-password-form">
+      <h5 class="module-heading border-bottom"> Current Password </h4>
+    <table width="100%">
+      <tr>
+        <td>Password</td>
+        <td>
+           <input type="password" name="old-password" id="old-password" class="form-control" >
+        </td>
+      </tr>
+    </table>
+    <h5 class="module-heading border-bottom"> New Password </h4>
+    <table width="100%">
+       <tr>
+        <td>Password</td>
+        <td>
+           <input type="password" name="new-password" id="new-password" class="form-control" >
+        </td>
+      </tr>
+       <tr>
+        <td>Retype Password</td>
+        <td>
+           <input type="password" name="verif-password" id="verif-password" class="form-control" >
+        </td>
+      </tr>
+    </table>
+	<button type="submit" id="save-newpass" class="btn btn-primary btn-sm pull-right"><span class="btn-text">Save Changes</span> <i class="loader loader-small"></i></button>
+	</form>
+  </div> <!--// div main container-fluid //-->
+</script>
 <!--// **********************
   Notifications Page
 *********************** //-->

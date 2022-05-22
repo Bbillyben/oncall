@@ -278,6 +278,12 @@ var oncall = {
         self.settings.init();
         self.updateTitleTag("");
       },
+      '/user/:user/password': function(){
+        oncall.callbacks.onLogin = $.noop;
+        oncall.callbacks.onLogout = $.noop;
+        self.settings.password.init();
+        self.updateTitleTag("password");
+      },
       '/user/:user/notifications': function(){
         oncall.callbacks.onLogin = $.noop;
         oncall.callbacks.onLogout = $.noop;
@@ -683,7 +689,9 @@ var oncall = {
           (function(i){
             var team = data[i],
                 summaryUrl = self.data.summaryUrl + team + '/summary';
+                console.log('url : '+summaryUrl);
             $.get(summaryUrl).done(function(response){
+              
               var model = {
                 data: response,
                 name: team
@@ -2563,6 +2571,7 @@ var oncall = {
       });
     },
     updateSettings: function(e){
+		console.log("update setting called");
       e.preventDefault();
       var $form = $(e.target),
           $cta = $form.find('button[type="submit"]'),
@@ -2594,6 +2603,151 @@ var oncall = {
         $cta.removeClass('loading disabled').prop('disabled', false);
       });
 
+    },
+    password: {
+      data: {
+        $page: $('.content-wrapper'),
+        $passwVerif: $('#verif-password'),
+        url: '/api/v0/users/',
+        pageSource: $('#password-template').html(),
+        settingsSubheaderTemplate: $('#settings-subheader-template').html(),
+        subheaderWrapper: '.subheader-wrapper',
+		    $form: '#user-password-form'
+      },
+      init: function(){
+        console.log('init passord');
+        Handlebars.registerPartial('settings-subheader', this.data.settingsSubheaderTemplate);
+        //this.getData();
+        var self = this;
+        //self.renderPage.call(self, this.data);
+        oncall.getModes();
+        this.getData();
+		    this.events();
+      },
+      events: function(){
+        console.log("passwd events");
+        router.updatePageLinks();
+		    this.data.$page.on('submit', this.data.$form, this.savePassword.bind(this));
+        $('#new-password').on('keyup', this.checkPassword.bind(this));
+        $('#verif-password').on('keyup', this.checkPassword.bind(this));
+        $('#old-password').on('keyup', this.checkPassword.bind(this));
+
+        // gestion submit btn
+        var $btn= $(this.data.$form).find('button[type="submit"]');
+        $btn.addClass('loading disabled').prop('disabled', true);
+        
+      },
+      getData: function(){
+        console.log("passw get data");
+        /*var self = this;
+        console.log('if oncall user : '+oncall.data.user)
+        var passData = {
+           name : oncall.data.user
+        };
+        self.renderPage.call(self, passData);*/
+        var self = this;
+        if (oncall.data.user) {
+          var passData = {
+            name : oncall.data.user
+         };
+          $.when(
+            oncall.data.rolesPromise,
+            oncall.data.modesPromise
+          ).done(function(){
+            console.log("is loaded");
+            
+            self.renderPage.call(self, passData);
+          });
+        } else {
+          router.navigate('/');
+        }
+
+
+      },
+      renderPage: function(data){
+        console.log("passwd renderpage");
+        var template = Handlebars.compile(this.data.pageSource);
+        this.data.$page.html(template(data));
+        this.events();
+      },
+      checkPassword: function(e){
+        e.preventDefault();
+        console.log("----------------- passverif");
+        var $form = $(e.target);
+        var newPassElt = this.data.$form + ' input[type=password][id="new-password"]';
+        var verifPassElt= this.data.$form + ' input[type=password][id="verif-password"]';
+        var newVal = $(newPassElt).val();
+        var verifVal = $(verifPassElt).val();
+        var $btn= $(this.data.$form).find('button[type="submit"]');
+
+        if(newVal.length ==0 || verifVal.length == 0 ){
+            $(newPassElt).removeClass('warning-red');
+            $(verifPassElt).removeClass('warning-red');
+            $(newPassElt).removeClass('warning-green');
+            $(verifPassElt).removeClass('warning-green');
+            return;
+        }
+
+        if (newVal == verifVal) {
+            $(newPassElt).removeClass('warning-red');
+            $(verifPassElt).removeClass('warning-red');
+            $(newPassElt).addClass('warning-green');
+            $(verifPassElt).addClass('warning-green');
+            $btn.removeClass('loading disabled').prop('disabled', false);
+        } else {
+            $(newPassElt).addClass('warning-red');
+            $(verifPassElt).addClass('warning-red');
+            $(newPassElt).removeClass('warning-green');
+            $(verifPassElt).removeClass('warning-green');
+            $btn.addClass('loading disabled').prop('disabled', true);
+        }
+      },
+	  savePassword: function(e){
+        e.preventDefault();
+        var $form = $(e.target);
+        var oldPassElt= this.data.$form + ' input[type=password][id="old-password"]';
+        var oldPass = $(oldPassElt).val();
+
+        if(oldPass.length == 0){
+            $(oldPassElt).addClass('warning-red');
+            return;
+        }
+        $(oldPassElt).removeClass('warning-red');
+        var newPassElt = this.data.$form + ' input[type=password][id="new-password"]';
+        var verifPassElt= this.data.$form + ' input[type=password][id="verif-password"]';
+        var newPass = $(newPassElt).val();
+
+        // disable buttin
+        var $btn= $(this.data.$form).find('button[type="submit"]');
+        $btn.addClass('loading disabled').prop('disabled', true);
+
+        var url = this.data.url + oncall.data.user + '/password';
+        console.log('url : '+url);
+
+         $.ajax({
+            type: 'PUT',
+            url: url,
+            dataType: 'html',
+            contentType: 'application/json',
+            data: JSON.stringify({old: oldPass, new: newPass})
+          }).done(function(){
+            console.log('Pass changes');
+            oncall.alerts.createAlert('Password Saved', 'success', $form);
+          }).fail(function(data){
+            var error = oncall.isJson(data.responseText) ? JSON.parse(data.responseText).description : data.responseText || 'Update failed.';
+            oncall.alerts.createAlert(error, 'danger');
+            console.log('Pass Error');
+          }).always(function(){
+            $btn.addClass('loading disabled').prop('disabled', true);
+            $(newPassElt).val('');
+            $(verifPassElt).val('');
+            $(oldPassElt).val('');
+            $(newPassElt).removeClass('warning-green');
+            $(verifPassElt).removeClass('warning-green');
+            
+          });
+
+	  }
     },
     notifications: {
       data: {
