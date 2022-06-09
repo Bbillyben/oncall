@@ -44,7 +44,7 @@ LDAP_SETTINGS = {}
 
 
 def normalize_phone_number(num):
-    return format_number(parse(num, 'US'), PhoneNumberFormat.INTERNATIONAL)
+    return num #(parse(num, 'US'), PhoneNumberFormat.INTERNATIONAL)
 
 
 def get_predefined_users(config):
@@ -121,9 +121,9 @@ def fetch_ldap():
         rtype, rdata, rmsgid, serverctrls = l.result3(msgid, resp_ctrl_classes=known_ldap_resp_ctrls)
         logger.info('Loaded %d entries from ldap.' % len(rdata))
         for dn, ldap_dict in rdata:
-            if LDAP_SETTINGS['attrs']['mail'] not in ldap_dict:
-                logger.error('ERROR: invalid ldap entry for dn: %s' % dn)
-                continue
+            #if LDAP_SETTINGS['attrs']['mail'] not in ldap_dict:
+            #    logger.error('ERROR: invalid ldap entry for dn: %s' % dn)
+            #    continue
 
             try:
                 username_field = LDAP_SETTINGS['attrs']['username']
@@ -158,7 +158,8 @@ def fetch_ldap():
             else:
                 slack = None
 
-            contacts = {'call': mobile, 'sms': mobile, 'email': mail, 'slack': slack, 'name': name}
+            #contacts = {'call': mobile, 'sms': mobile, 'email': mail, 'slack': slack, 'name': name}
+            contacts = {'call': mobile, 'email': mail, 'name': name}
             dn_map[dn] = username
             users[username] = contacts
 
@@ -226,7 +227,6 @@ def update_user(username, ldap_contacts, engine):
     photo_update_sql = 'UPDATE user SET photo_url = %s WHERE name = %s'
 
     modes = get_modes(engine)
-
     try:
         if full_name != db_contacts.get('full_name'):
             engine.execute(name_update_sql, (full_name, username))

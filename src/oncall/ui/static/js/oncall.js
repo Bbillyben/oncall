@@ -454,6 +454,8 @@ var oncall = {
       this.events();
     },
     renderCardInner: function(data){
+	 console.log("inner card : "+JSON.stringify(data.data.current));
+			
       var template = Handlebars.compile(this.data.cardInnerTemplate);
       this.data.$page.find('.dashboard-card[data-team="' + data.name + '"] .dashboard-card-inner').html(template(data));
       router.updatePageLinks();

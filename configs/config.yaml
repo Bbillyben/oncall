@@ -5,15 +5,16 @@ server:
   port: 8080
 oncall_host: http://localhost:8080
 metrics: dummy
+# Db crendeital oncallDistUserD / "On1Call2User3"
 db:
   conn:
     kwargs:
       scheme: mysql+pymysql
-      user: root
-      password: "1234"
+      user: 
+      password: ""
       host: 127.0.0.1
       port: 3306
-      database: oncall
+      database: 
       charset: utf8
       echo: True
     str: "%(scheme)s://%(user)s:%(password)s@%(host)s:%(port)s/%(database)s?charset=%(charset)s"
@@ -44,17 +45,18 @@ debug: False
 # authenticate(self, username, password)
 auth:
     debug: False
-    module: 'oncall.auth.modules.debug'  # Auth module where Authenticator is implemented
+    # module: 'oncall.auth.modules.debug'  # Auth module where Authenticator is implemented
 
 # Example configuration for LDAP-based auth
-    module: 'oncall.auth.modules.ldap_example'
-    module: 'oncall.auth.modules.ldap_import' # for automatically import user at first connexion
-    ldap_url: 'ldap://IP'
+    # module: 'oncall.auth.modules.ldap_example'
+    # module: 'oncall.auth.modules.ldap_import' # for automatically import user at first connexion
+    module: 'oncall.auth.modules.ldap_pass' # for automatically import user at first connexion and let user change their password
+    ldap_url: 'ldap://'
     ldap_user_suffix: ''
 #   ldap_cert_path: '/etc/ldap_cert.pem'
-    ldap_bind_user: 'cn=admin,dc=site,dc=fr'
-    ldap_bind_password: 'pass1234'
-    ldap_base_dn: 'dc=site,dc=fr'
+    ldap_bind_user: ''
+    ldap_bind_password: ''
+    ldap_base_dn: ''
     ldap_search_filter: '(uid=%s)'
 # options used by the ldap_import module.
     import_user: True
@@ -62,16 +64,18 @@ auth:
       username: 'uid'
       full_name: 'displayName'
       email: 'mail'
-      mobile: 'mobile'
-      sms: 'mobile'
-      slack: 'uid'
+      call: 'mobile'
+      homecall: 'homePhone'
+      shortnum: 'telephoneNumber'
+#    sms: 'mobile'
+#     slack: 'uid'
 
 ############################
 ### Oncall-notifier settings
 ############################
 notifier:
   # Skip sending messages, log instead
-  skipsend: True
+  skipsend: False
 
 # Reminder notification settings
 notifications:
@@ -98,8 +102,8 @@ notifications:
 # Reminder task settings
 reminder:
   activated: True
-  polling_interval: 360  # In seconds, the reminder will poll DB for events every $n seconds
-  default_timezone: 'US/Pacific'  # Dates/times in the reminders are formatted in this timezone
+  polling_interval: 30  # In seconds, the reminder will poll DB for events every $n seconds
+  default_timezone: 'Europe/Paris'  # Dates/times in the reminders are formatted in this timezone
 
 # User validator checks that people scheduled for on-call events have defined phone numbers
 user_validator:
@@ -123,32 +127,37 @@ messengers:
 #    iris_api_key: magic
 #    api_host: http://localhost:16649
 
-  - type: dummy
-    application: oncall
-    iris_api_key: magic
+#  - type: dummy
+#    application: oncall
+#    iris_api_key: magic
+   - type: gmail_messenger
+     use_oauth: False
+     application: oncall
+     user: @gmail.com
+     password: 
+     use_default: @.com
+#     footer: |
+#       </br></br><small><i><a href="" target="blank"> Oncall Biotherapy Plateform 2022 </a></i></small>
+
 
 ############################
 ### Oncall frontend settings
 ############################
 supported_timezones:
-  - 'US/Pacific'
-  - 'US/Eastern'
-  - 'US/Central'
-  - 'US/Mountain'
-  - 'US/Alaska'
-  - 'US/Hawaii'
-  - 'Asia/Kolkata'
-  - 'Asia/Shanghai'
+  - 'Europe/Paris'
+  - 'Europe/London'
   - 'UTC'
 
 index_content_setting:
   # Page footer contents
-  #footer: |
-  #  <ul>
-  #    <li>Oncall © LinkedIn 2020</li>
-  #    <li>Feedback</li>
-  #    <li><a href="http://oncall.tools" target="_blank">About</a></li>
-  #  </ul>
+  footer: |
+    <ul>
+      <li>Oncall © Biotherapy Plateform 2022 </li>
+      <li><a href="https://translational-research-diabetes.com/" target="_blank">Translationnal Research for Diabetes Unit</a></li>
+      <li><a href="https://chu-lille.fr/" target="_blank">Lille Hospital</a></li>
+      <li><a href="https://www.univ-lille.fr/" target="_blank">Lille University</a></li>
+    </ul>
+    <small><i>(fork from LinkedIn/oncall by ben)</i><small>
   # Note displayed when a user has no phone number
   missing_number_note: 'No number'
 header_color: '#3a3a3a'
@@ -156,7 +165,7 @@ header_color: '#3a3a3a'
 # The base url for the public oncall calendar. This url has to open to the public internet for most web calendar subscriptions to work.
 # The public calendar url will be formatted as follows: "{public_calendar_base_url}/{ical_key}".
 # Replace localhost with the hostname of the oncall or iris-relay instance.
-public_calendar_base_url: 'https://oct.legendre-ratajczak.fr/api/v0/ical'
+public_calendar_base_url: ''
 # Additional message you want to put here, could be a link to the FAQ
 public_calendar_additional_message: 'Link to FAQ'
 
@@ -187,9 +196,11 @@ iris_plan_integration:
       - role: 'oncall-primary'
       - role: 'team'
       - role: 'manager'
+
 # CORS settings
-# allow_origins_list:
-#   - http://www.example.com
+#allow_origins_list:
+#   - https://
+
 
 # Configures whether Slack settings will appear in the frontend
 slack_instance: foobar
@@ -199,9 +210,7 @@ slack_instance: foobar
 # APIs without authentication
 require_auth: True
 usercontact_ui_readonly: False
-
-# Setting to determine whether the autheticated user can modify calendar entries.
-auth_user_cal_mod: False
+auth_user_cal_mod: False # to let or not user modify calendar
 
 ###########################
 ### Oncall bonus management
@@ -228,10 +237,10 @@ user_sync:
 #
 # # User management by syncing from LDAP
 ldap_sync:
-  url: 'ldap://127.0.0.1'
-  base: 'dc=site,dc=fr'
-  user: 'CN=admin,DC=site,DC=fr'
-  password: 'pass1234'
+  url: 'ldap://'
+  base: ''
+  user: ''
+  password: ''
 #   cert_path: '/etc/ldap_cert.pem'
   query: '(uid=*)'
    # Map of Oncall user information to LDAP attribute
@@ -240,4 +249,6 @@ ldap_sync:
     full_name: 'displayName'
     mail: 'mail'
     mobile: 'mobile'
+    homecall: 'homePhone'
+    shortnum: 'telephoneNumber'
 #   image_url: 'https://image.example.com/api/%s/picture'

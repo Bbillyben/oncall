@@ -89,19 +89,16 @@
   <ul class="card-inner-wrapper">
     {{#each data}}
       {{#ifNotEmpty this}}
-	  	<p class="border-top"></p>
-        <span class="subheading enhanced">{{@key}}</span>
+        <span class="subheading light">{{@key}}</span>
         {{#each this}}
           {{#each this}}
           <li class="card-inner border-bottom" data-card-name="{{full_name}}">
             <img class="card-picture" src="{{defaultPhoto photo_url}}" alt="{{full_name}}">
             <h4><strong>{{full_name}}</strong> <span class="badge pull-right" data-role="{{role}}">{{role}}</span></h4>
             <div class="light"><a href="mailto:{{user_contacts.email}}">{{user_contacts.email}}</a></div>
-            <div class="light"><a href="tel:{{user_contacts.call}}">{{user_contacts.call}}</a></div>
-            <div class="light"><a href="tel:{{user_contacts.homecall}}">{{user_contacts.homecall}}</a></div>
-            <div class="light"><a href="tel:{{user_contacts.shortnum}}">{{user_contacts.shortnum}}</a></div>
+            <span class="light"><a href="tel:{{user_contacts.call}}">{{user_contacts.call}}</a></span>
             <ul class="border-top card-content">
-              <li class="small light">{{convertUnixTime start 'lll'}} - {{convertUnixTime end 'lll'}}</li>
+              <li class="small light">{{convertUnixTime start}} - {{convertUnixTime end}}</li>
             </ul>
           </li>
           {{/each}}
@@ -273,39 +270,21 @@
 <!--// landing teams partial -->
 <script id="landing-teams-inner-template" type="text/x-handlebars-template">
   <ul class="card-inner-wrapper">
-    {{#ifNotEmpty data.current}}
-     
+    {{#ifNotEmpty data.current.primary}}
       <span class="subheading light">On Call Now</span>
-      {{#each data.current}}
-        {{#each this}}
-        <li class="card-inner border-bottom" data-card-name="{{full_name}}">
-          <img class="card-picture" src="{{defaultPhoto photo_url}}" alt="{{full_name}}">
-          <h4><strong><a class="landing-teams-name" target="_blank" href="mailto:{{user_contacts.email}}">{{full_name}}</a></strong> <span class="badge pull-right" data-role="{{role}}">{{role}}</span></h4>
-          <ul >
-              {{#if user_contacts.call}}
-                <li>Call : <span class="light"><a href="tel:{{user_contacts.call}}">{{user_contacts.call}}</a></span></li>
-              {{else}}
-                <li><span class="error-text">No phone number found!</span></li>
-              {{/if}}
-              {{#if user_contacts.sms}}
-                <li>Sms :<span class="light"> <a href="tel:{{user_contacts.sms}}">{{user_contacts.sms}}</a></span></li>
-              {{/if}}
-              {{#if user_contacts.homecall}}
-                <li>Homecall :<span class="light"> <a href="tel:{{user_contacts.homecall}}"> {{user_contacts.homecall}} </a></span></li>
-              {{/if}}
-              {{#if user_contacts.shortnum}}
-                <li>Shortnum :<span class="light"> <a href="tel:{{user_contacts.shortnum}}"> {{user_contacts.shortnum}} </a></span></li>
-              {{/if}}
-              {{#if user_contacts.email}}
-                <li>E-mail :<span class="light"> <a target="_blank" href="mailto:{{user_contacts.email}}"> {{user_contacts.email}} </a></span></li>
-              {{/if}}
-          </ul>
-          <ul class="border-top card-content">
-            <li class="small light">{{convertUnixTime start 'lll'}} - {{convertUnixTime   end 'lll'}}</li>
-          </ul>
-        </li>
-        {{/each}}
-      {{/each}}
+      <li class="card-inner border-bottom" data-card-name="{{data.current.primary.0.full_name}}">
+        <img class="card-picture" src="{{defaultPhoto data.current.primary.0.photo_url}}" alt="{{data.current.primary.0.full_name}}">
+        <h4><strong><a class="landing-teams-name" target="_blank" href="mailto:{{data.current.primary.0.user_contacts.email}}">{{data.current.primary.0.full_name}}</a></strong> <span class="badge pull-right" data-role="{{data.current.primary.0.role}}">{{data.current.primary.0.role}}</span></h4>
+
+        {{#if data.current.primary.0.user_contacts.call}}
+          <span class="light"><a href="tel:{{data.current.primary.0.user_contacts.call}}">{{data.current.primary.0.user_contacts.call}}</a></span>
+        {{else}}
+          <span class="error-text">No phone number found!</span>
+        {{/if}}
+        <ul class="border-top card-content">
+          <li class="small light">{{convertUnixTime data.current.primary.0.start}} - {{convertUnixTime data.current.primary.0.end}}</li>
+        </ul>
+      </li>
     {{else}}
       <div style="text-align:center;">No on call data found</div>
     {{/ifNotEmpty}}
@@ -527,34 +506,17 @@
         <a href="tel:{{getUserInfo this @root.users 'contacts.call'}}"> {{getUserInfo this @root.users 'contacts.call'}} </a>
       {{/isEqual}}
       <ul class="card-inner-extra">
-        {{#isEqual 'Unknown' (getUserInfo this @root.users 'contacts.sms') }}
-            {% endraw %}
-            {% raw %}
-         {{else}}
         <li>
           SMS:
-          <a href="tel:{{getUserInfo this @root.users 'contacts.sms'}}"> {{getUserInfo this @root.users 'contacts.sms'}} </a>
-        </li>
-        {{/isEqual}}
-        {{#isEqual 'Unknown' (getUserInfo this @root.users 'contacts.homecall') }}
-        {% endraw %}
-        {% raw %}
+          {{#isEqual 'Unknown' (getUserInfo this @root.users 'contacts.sms') }}
+            {% endraw %}
+              {{missing_number_note|safe}}
+            {% raw %}
           {{else}}
-        <li>
-          HomeCall:          
-            <a href="tel:{{getUserInfo this @root.users 'contacts.homecall'}}"> {{getUserInfo this @root.users 'contacts.homecall'}} </a>
+            <a href="tel:{{getUserInfo this @root.users 'contacts.sms'}}"> {{getUserInfo this @root.users 'contacts.sms'}} </a>
+          {{/isEqual}}
         </li>
-         {{/isEqual}}
-          {{#isEqual 'Unknown' (getUserInfo this @root.users 'contacts.shortnum') }}
-        {% endraw %}
-        {% raw %}
-          {{else}}
-        <li>
-          Shortnum:          
-            <a href="tel:{{getUserInfo this @root.users 'contacts.shortnum'}}"> {{getUserInfo this @root.users 'contacts.shortnum'}} </a>
-        </li>
-         {{/isEqual}}
-        <!-- <li> Slack: <a>{{getUserInfo this @root.users 'contacts.slack'}}</a> </li> -->
+        <li> Slack: <a>{{getUserInfo this @root.users 'contacts.slack'}}</a> </li>
         <li> E-Mail: <a target="_blank" href="mailto:{{getUserInfo this @root.users 'contacts.email'}}"> {{getUserInfo this @root.users 'contacts.email'}} </a> </li>
       </ul>
     </div>
@@ -606,15 +568,13 @@
             <span class="badge pull-right" data-role="{{role}}">{{role}}</span>
             <ul class="card-inner-extra light small">
               <li> Call: {{#if user_contacts.call}} <a href="tel:{{user_contacts.call}}"> {{user_contacts.call}} </a> {{else}} <span class="error-text">No number found!</span> {{/if}} </li>
-              {{#if user_contacts.sms}}<li> SMS:  <a href="tel:{{user_contacts.sms}}"> {{user_contacts.sms}} </a>  </li>{{/if}}
-              {{#if user_contacts.homecall}}<li> Homecall:  <a href="tel:{{user_contacts.homecall}}"> {{user_contacts.homecall}} </a>  </li>{{/if}}
-              {{#if user_contacts.shortnum}}<li> Shortnum:  <a href="tel:{{user_contacts.shortnum}}"> {{user_contacts.shortnum}} </a>  </li>{{/if}}
-              <!-- <li> Slack: <a>{{user_contacts.slack}}</a> </li> -->
+              <li> SMS: {{#if user_contacts.sms}} <a href="tel:{{user_contacts.sms}}"> {{user_contacts.sms}} </a> {{else}} <span class="error-text">No number found!</span> {{/if}} </li>
+              <li> Slack: <a>{{user_contacts.slack}}</a> </li>
               <li> E-Mail: <a target="_blank" href="mailto:{{user_contacts.email}}"> {{user_contacts.email}} </a> </li>
             </ul>
             <ul class="border-top card-content">
               <li class="small light">
-                {{ convertUnixTime start 'lll'}}  - <br> {{convertUnixTime end 'lll'}}
+                {{ convertUnixTime start}}  - <br> {{convertUnixTime end}}
                 <i class="svg-icon svg-icon-chevron svg-icon-chevron-down pull-right">
                   <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 10 10" style="fill: currentColor">
                     <path d="M1.5 0l-1.5 1.5 4 4 4-4-1.5-1.5-2.5 2.5-2.5-2.5z" transform="translate(0 1)" />
@@ -1371,10 +1331,9 @@
       {{/unless}}
       <ul class="border-top card-content">
         <li> <a target="_blank" href="mailto:{{user.contacts.email}}"> {{user.contacts.email}} </a> </li>
-        <li> Call: {{#if user_contacts.call}} <a href="tel:{{user_contacts.call}}"> {{user_contacts.call}} </a> {{else}} <span class="error-text">No number found!</span> {{/if}} </li>
-        {{#if user_contacts.sms}}<li> SMS:  <a href="tel:{{user_contacts.sms}}"> {{user_contacts.sms}} </a>  </li>{{/if}}
-        {{#if user_contacts.homecall}}<li> Homecall:  <a href="tel:{{user_contacts.homecall}}"> {{user_contacts.homecall}} </a>  </li>{{/if}}
-        {{#if user_contacts.shortnum}}<li> Shortnum:  <a href="tel:{{user_contacts.shortnum}}"> {{user_contacts.shortnum}} </a>  </li>{{/if}} <!-- <li> <span class="light"> Slack </span> <a> {{user.contacts.slack}} </a> </li> -->
+        <li> <span class="light"> Call </span> {{#if user.contacts.call}} <a href="tel:{{user.contacts.call}}" target="_blank"> {{user.contacts.call}} </a> {{else}} <span class="error-text">No number found!</span> {{/if}} </li>
+        <li> <span class="light"> SMS </span> {{#if user.contacts.sms}} <a href="tel:{{user.contacts.sms}}" target="_blank"> {{user.contacts.sms}} </a> {{else}} <span class="error-text">No number found!</span> {{/if}} </li>
+        <li> <span class="light"> Slack </span> <a> {{user.contacts.slack}} </a> </li>
         <span class="close remove-card-item" data-admin-action="true" data-toggle="modal" data-target="#confirm-action-modal" data-modal-action="oncall.team.info.removeCardItem" data-modal-title="Remove {{user.full_name}}" data-modal-content="Delete {{user.full_name}} from roster?">
           <i class="svg-icon svg-icon-trash">
             <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 8 8">
@@ -1403,34 +1362,17 @@
             <a href="tel:{{getUserInfo this @root.users 'contacts.call'}}"> {{getUserInfo this @root.users 'contacts.call'}} </a>
           {{/isEqual}}
         </li>
-          {{#isEqual 'Unknown' (getUserInfo this @root.users 'contacts.sms') }}
-            {% endraw %}
-            {% raw %}
-         {{else}}
         <li>
           <span class="light"> SMS </span>
-          <a href="tel:{{getUserInfo this @root.users 'contacts.sms'}}"> {{getUserInfo this @root.users 'contacts.sms'}} </a>
-        </li>
-        {{/isEqual}}
-         {{#isEqual 'Unknown' (getUserInfo this @root.users 'contacts.homecall') }}
+          {{#isEqual 'Unknown' (getUserInfo this @root.users 'contacts.sms') }}
             {% endraw %}
+              {{missing_number_note|safe}}
             {% raw %}
-         {{else}}
-        <li>
-          <span class="light"> Homecall </span>
-          <a href="tel:{{getUserInfo this @root.users 'contacts.homecall'}}"> {{getUserInfo this @root.users 'contacts.homecall'}} </a>
+          {{else}}
+            <a href="tel:{{getUserInfo this @root.users 'contacts.sms'}}"> {{getUserInfo this @root.users 'contacts.sms'}} </a>
+          {{/isEqual}}
         </li>
-        {{/isEqual}}
-         {{#isEqual 'Unknown' (getUserInfo this @root.users 'contacts.shortnum') }}
-            {% endraw %}
-            {% raw %}
-         {{else}}
-        <li>
-          <span class="light"> Shortnum </span>
-          <a href="tel:{{getUserInfo this @root.users 'contacts.shortnum'}}"> {{getUserInfo this @root.users 'contacts.shortnum'}} </a>
-        </li>
-        {{/isEqual}}
-        <!-- <li> <span class="light"> Slack </span> <a> {{getUserInfo this @root.users 'contacts.slack'}} </a></li> -->
+        <li> <span class="light"> Slack </span> <a> {{getUserInfo this @root.users 'contacts.slack'}} </a></li>
         <span class="close remove-card-item" data-admin-action="true" data-toggle="modal" data-target="#confirm-action-modal" data-modal-action="oncall.team.info.removeCardItem" data-modal-title="Remove {{getUserInfo this @root.users 'full_name'}}" data-modal-content="Delete {{getUserInfo this @root.users 'full_name'}} from roster?">
           <i class="svg-icon svg-icon-trash">
             <svg xmlns="http://www.w3.org/2000/svg" width="14px" height="14px" viewBox="0 0 8 8">
@@ -1478,7 +1420,6 @@
   <nav class="subnav">
     <ul class="container-fluid">
       <li {{#isEqual page "settings"}}class="active"{{/isEqual}} href="/user/{{username}}" data-navigo> Settings </li>
-	  <li {{#isEqual page "password"}}class="active"{{/isEqual}} href="/user/{{username}}/password" data-navigo> Password Management </li>
       <li {{#isEqual page "notifications"}}class="active"{{/isEqual}} href="/user/{{username}}/notifications" data-navigo> Notifications </li>
       <li {{#isEqual page "ical_key"}}class="active"{{/isEqual}} href="/user/{{username}}/ical_key" data-navigo> Public Calendar Keys </li>
     </ul>
@@ -1553,44 +1494,7 @@
     </form>
   </div>
 </script>
-<!--// **********************
-  Password Page
-*********************** //-->
-<script id="password-template" type="text/x-handlebars-template">
-  <div class="subheader-wrapper">
-    {{>settings-subheader username=name page="password"}}
-  </div>
-  <div class="main container-fluid">
-      <h3 class="module-heading"> Password modification</h3>
-  <form class="module clearfix" id="user-password-form">
-      <h5 class="module-heading border-bottom"> Current Password </h4>
-    <table width="100%">
-      <tr>
-        <td>Password</td>
-        <td>
-           <input type="password" name="old-password" id="old-password" class="form-control" >
-        </td>
-      </tr>
-    </table>
-    <h5 class="module-heading border-bottom"> New Password </h4>
-    <table width="100%">
-       <tr>
-        <td>Password</td>
-        <td>
-           <input type="password" name="new-password" id="new-password" class="form-control" >
-        </td>
-      </tr>
-       <tr>
-        <td>Retype Password</td>
-        <td>
-           <input type="password" name="verif-password" id="verif-password" class="form-control" >
-        </td>
-      </tr>
-    </table>
-	<button type="submit" id="save-newpass" class="btn btn-primary btn-sm pull-right"><span class="btn-text">Save Changes</span> <i class="loader loader-small"></i></button>
-	</form>
-  </div> <!--// div main container-fluid //-->
-</script>
+
 <!--// **********************
   Notifications Page
 *********************** //-->

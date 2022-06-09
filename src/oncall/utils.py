@@ -56,6 +56,7 @@ def create_notification(context, team_id, role_ids, type_name, users_involved, c
 
     for notification in notifications:
         tz = notification['time_zone'] if notification['time_zone'] else 'UTC'
+
         for var_name, timestamp in kwargs.items():
             context[var_name] = ' '.join([datetime.fromtimestamp(timestamp,
                                                                  timezone(tz)).strftime('%Y-%m-%d %H:%M:%S'),
@@ -67,6 +68,7 @@ def create_notification(context, team_id, role_ids, type_name, users_involved, c
 
 
 def subscribe_notifications(team, user, cursor):
+    print('---------------- subscribe nbotif :',team, user, cursor)
     cursor.execute('SELECT id FROM notification_setting WHERE user_id = (SELECT id FROM user WHERE name = %s) '
                    'AND team_id = (SELECT id FROM team WHERE name = %s)', (user, team))
     
@@ -102,6 +104,7 @@ def create_audit(context, team_name, action_name, req, cursor):
     cursor.execute('''INSERT INTO audit(`team_name`, `owner_name`, `action_name`, `context`, `timestamp`)
                       VALUES (%s, %s, %s, %s, UNIX_TIMESTAMP())''',
                    (team_name, owner_name, action_name, json_dumps(context)))
+
 
 
 def user_in_team(cursor, user_id, team_id):

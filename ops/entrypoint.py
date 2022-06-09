@@ -89,6 +89,7 @@ def main():
 
     os.execv('/usr/bin/uwsgi',
              ['/usr/bin/uwsgi', '--yaml', '/home/oncall/daemons/uwsgi.yaml:prod'])
+    print('I can do smth here')
 
 
 if __name__ == '__main__':

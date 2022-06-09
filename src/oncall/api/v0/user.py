@@ -4,7 +4,7 @@
 from falcon import HTTPNotFound, HTTP_204, HTTPBadRequest
 from ujson import dumps as json_dumps
 from ... import db
-from ...auth import login_required, check_user_auth
+from ...auth import login_required, check_user_auth, auth_manager
 from ...utils import load_json_body
 from .users import get_user_data
 
@@ -176,6 +176,7 @@ def on_put(req, resp, user_name):
             contact['user'] = user_name
             contacts.append(contact)
         cursor.executemany(contacts_query, contacts)
+        auth_manager.updateuserdata(user_name, contacts)
     connection.commit()
     cursor.close()
     connection.close()

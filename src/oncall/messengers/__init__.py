@@ -14,6 +14,7 @@ class OncallMessengerException(Exception):
 
 
 def init_messengers(messengers):
+    logger.debug("###/////////////////////    ------ > init messenders ")
     for messenger in messengers:
         if '.' in messenger['type']:
             module_path = messenger['type']

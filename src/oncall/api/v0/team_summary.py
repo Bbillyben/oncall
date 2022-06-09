@@ -111,6 +111,9 @@ def on_get(req, resp, team):
         }
 
     '''
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ask for summary', team)
+    print('req : ', req)
+    print('resp : ', resp)
     connection = db.connect()
     cursor = connection.cursor(db.DictCursor)
 
@@ -211,5 +214,4 @@ def on_get(req, resp, team):
         except KeyError:
             # No current primary events exist, do nothing
             pass
-
     resp.body = dumps(payload)

@@ -378,6 +378,8 @@ nav.subnav li.active {
   letter-spacing: 1px;
 }
 
+
+
 /*
  * Search page
  */
@@ -572,7 +574,7 @@ body[data-authenticated="false"] #pinned-teams {
 .module-card .landing-teams-name {
   width: calc(100% - 60px);
   text-overflow: ellipsis;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   overflow: hidden;
   display: inline-block;
   line-height: 20px;
@@ -681,7 +683,7 @@ body[data-authenticated="false"] #pinned-teams {
 .module-card .card-inner-user {
   width: 53%;
   overflow: hidden;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   text-overflow: ellipsis;
   display: inline-block;
 }
@@ -1794,6 +1796,10 @@ footer li:first-child {
 
 .dark {
   color: #333;
+}
+.enhanced {
+  color: #60a491;
+  font-weight: bold;
 }
 
 .italic {

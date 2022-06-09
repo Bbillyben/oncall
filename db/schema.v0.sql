@@ -317,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `contact_mode` (
 -- Initialize contact modes
 -- -----------------------------------------------------
 INSERT IGNORE INTO `contact_mode` (`name`)
-VALUES ('email'), ('sms'), ('call'), ('slack'), ('teams_messenger');
+VALUES ('email'), ('sms'), ('call'), ('slack'), ('teams_messenger'), ('homecall'), ('shortnum');
 
 -- -----------------------------------------------------
 -- Table `user_contact`

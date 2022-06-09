@@ -46,14 +46,9 @@ class ReqBodyMiddleware(object):
 
 class AuthMiddleware(object):
     def process_resource(self, req, resp, resource, params):
-        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~ process ressource auth')
-        print(' - self', self)
-        print(' - req :', req)
-        print('     - req header : ', req.get_header('AUTHORIZATION'))
-        print(' - resp :', resp)
-        print(' - resource : ', resource)
-        print('    - res allow no auth : ', hasattr(resource, 'allow_no_auth'))
-        print(' - params : ', params) 
+        #print(' /// auth required')
+        #print('ressource allow :', hasattr(resource,'allow_no_auth'))
+        #print('param : ', params)
         try:
             if resource.allow_no_auth:
                 return

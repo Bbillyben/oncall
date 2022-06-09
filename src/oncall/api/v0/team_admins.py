@@ -117,6 +117,11 @@ def on_post(req, resp, team):
                        (team_id, user_id))
         # subscribe user to team notifications
         subscribe_notifications(team, user_name, cursor)
+        print('-------------------------------------------------------------------  create admin ----------------------------------------------------- ')
+        print('user :', user_name)
+        print('team : ', team)
+        print('req : ', req)
+        print('cursor', cursor)
         create_audit({'user': user_name}, team, ADMIN_CREATED, req, cursor)
         connection.commit()
     except db.IntegrityError as e:

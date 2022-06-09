@@ -181,6 +181,8 @@ def on_post(req, resp):
 
     connection = db.connect()
     cursor = connection.cursor()
+    print('start insert')
+    print('args : ', team_name, slack, slack_notifications, email, scheduling_timezone, iris_plan, iris_enabled, override_number)
     try:
         cursor.execute('''INSERT INTO `team` (`name`, `slack_channel`, `slack_channel_notifications`, `email`, `scheduling_timezone`,
                                               `iris_plan`, `iris_enabled`, `override_phone_number`)

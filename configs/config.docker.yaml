@@ -9,8 +9,8 @@ db:
     kwargs:
       scheme: mysql+pymysql
       user: root
-      password: '1234'
-      host: oncall-mysql
+      password: ''
+      host: 192.168.1.185
       port: 3306
       database: oncall
       charset: utf8
@@ -31,19 +31,19 @@ messengers:
   - type: dummy
     application: oncall
     iris_api_key: magic
+  - type: gmail_messenger
+     use_oauth: False # to use oAuth2, but has to be validated in the container.. bof
+     application: oncall
+     user: mylail@gmail.com #gmail mail address to use
+     password: Gmail_password #gmail passord
+     use_default: myDefaul@other.com # default mail adress recipient were all mail will be redirected for debugging, comment to use user mail
 
 # allow_origins_list:
 #   - http://www.example.com
 
 supported_timezones:
-  - 'US/Pacific'
-  - 'US/Eastern'
-  - 'US/Central'
-  - 'US/Mountain'
-  - 'US/Alaska'
-  - 'US/Hawaii'
-  - 'Asia/Kolkata'
-  - 'Asia/Shanghai'
+  - 'Europe/Paris'
+  - 'Europe/London'
   - 'UTC'
 
 index_content_setting:
@@ -57,10 +57,16 @@ index_content_setting:
 
 notifications:
   default_roles:
-    - "primary"
-    - "secondary"
-    - "shadow"
-    - "manager"
+    - "Resp. Isolement"
+    - "Isolement Senior"
+    - "Isolement Junior"
+    - "Evaluation"
+    - "Coord. PMO Jour"
+    - "Coord. PMO Nuit"
+    - "Chir. CAE-A"
+    - "Chir. PMO Pancreas"
+    - "Endocrino"
+    - "Interne PMO Pancreas"
   default_times:
     - 86400
     - 604800
@@ -70,7 +76,7 @@ notifications:
 reminder:
   activated: True
   polling_interval: 360
-  default_timezone: 'US/Pacific'
+  default_timezone: 'Europe/Paris'
 
 user_validator:
   activated: True
