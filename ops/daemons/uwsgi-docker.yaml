@@ -41,3 +41,4 @@ prod:
       - cmd=/usr/sbin/nginx -c /home/oncall/daemons/nginx.conf,pidfile=/home/oncall/var/run/nginx.pid
       - cmd=/home/oncall/env/bin/oncall-notifier /home/oncall/config/config.yaml
       - cmd=/home/oncall/env/bin/oncall-scheduler /home/oncall/config/config.yaml
+      - cmd=/home/oncall/env/bin/oncall-user-sync /home/oncall/config/config.yaml

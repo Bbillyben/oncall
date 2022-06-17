@@ -136,6 +136,13 @@ messengers:
      user: @gmail.com
      password: 
      use_default: @.com
+    - type: smtp_messenger
+      application: oncall
+      user: sender@mail.com
+      password: sender_pass
+      smtp_server: smtp.example.com
+      smtp_port: 587
+      use_default: defaultmailrecipient@fortest.com
 #     footer: |
 #       </br></br><small><i><a href="" target="blank"> Oncall Biotherapy Plateform 2022 </a></i></small>
 

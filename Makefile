@@ -1,7 +1,7 @@
 all: serve
 
 serve:
-	oncall-dev ./configs/config.yaml
+	oncall-dev /home/ben/configs/config.yaml
 
 unit:
 	py.test -v ./test
