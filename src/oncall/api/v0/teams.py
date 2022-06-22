@@ -14,7 +14,7 @@ constraints = {
     'name': '`team`.`name` = %s',
     'name__eq': '`team`.`name` = %s',
     'name__contains': '`team`.`name` LIKE CONCAT("%%", %s, "%%")',
-    'name__startswith': '`team`.`name` LIKE CONCAT(%s, "%%")',
+    'name__startswith': 'UPPER(`team`.`name`) LIKE UPPER(CONCAT("%%", %s, "%%"))',
     'name__endswith': '`team`.`name` LIKE CONCAT("%%", %s)',
     'id': '`team`.`id` = %s',
     'id__eq': '`team`.`id` = %s',

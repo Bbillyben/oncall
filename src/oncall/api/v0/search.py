@@ -80,7 +80,7 @@ def on_get(req, resp):
 
     data = {}
     if 'teams' in fields:
-        query = 'SELECT `name` FROM `team` WHERE `team`.`name` LIKE CONCAT("%%", %s, "%%") ' \
+        query = 'SELECT `name` FROM `team` WHERE UPPER(`team`.`name`) LIKE UPPER(CONCAT("%%", %s, "%%")) ' \
                 'AND `active` = TRUE'
         cursor.execute(query, keyword)
         data['teams'] = [r[0] for r in cursor]
@@ -102,7 +102,7 @@ def on_get(req, resp):
 
     if 'users' in fields:
         query = '''SELECT  `full_name`, `name` FROM `user`
-                   WHERE `active` = TRUE AND (`name` LIKE CONCAT(%s, "%%") OR `full_name` LIKE CONCAT(%s, "%%"))'''
+                   WHERE `active` = TRUE AND (UPPER(`name`) LIKE UPPER(CONCAT("%%", %s, "%%")) OR UPPER(`full_name`) LIKE UPPER(CONCAT("%%", %s, "%%")))'''
         cursor.execute(query, (keyword, keyword))
         data['users'] = [{'full_name': r[0], 'name': r[1]} for r in cursor]
 
