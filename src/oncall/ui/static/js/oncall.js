@@ -2629,7 +2629,7 @@ var oncall = {
       events: function(){
         console.log("passwd events");
         router.updatePageLinks();
-		    this.data.$page.on('submit', this.data.$form, this.savePassword.bind(this));
+	    this.data.$page.on('submit', this.data.$form, this.savePassword.bind(this));
         $('#new-password').on('keyup', this.checkPassword.bind(this));
         $('#verif-password').on('keyup', this.checkPassword.bind(this));
         $('#old-password').on('keyup', this.checkPassword.bind(this));
@@ -2706,6 +2706,8 @@ var oncall = {
       },
 	  savePassword: function(e){
         e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
         var $form = $(e.target);
         var oldPassElt= this.data.$form + ' input[type=password][id="old-password"]';
         var oldPass = $(oldPassElt).val();
